@@ -70,11 +70,12 @@ fetchReplacement = (url, options) ->
   options.cacheRequest ?= requestCachingEnabled
   options.showProgressBar ?= true
 
-  triggerEvent EVENTS.FETCH, url: url.absolute
-
   xhr?.abort()
   xhr = new XMLHttpRequest
   xhr.open 'GET', url.formatForXHR(cache: options.cacheRequest), true
+
+  triggerEvent EVENTS.FETCH, url: url.absolute, xhr: xhr
+
   xhr.setRequestHeader 'Accept', 'text/html, application/xhtml+xml, application/xml'
   xhr.setRequestHeader 'X-XHR-Referer', referer
 
